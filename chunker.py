@@ -22,6 +22,7 @@ to it, write down what you saw, and move on. That's a real observation about
 your pipeline, not giving up.
 """
 
+import re
 from dataclasses import dataclass
 
 import config
@@ -82,22 +83,51 @@ def fallback_split(
 
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
+    Split documents on paragraph breaks instead of a character count.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
+    A blank line is where the writer decided one thought ended and the next
+    began, so cutting there keeps whole thoughts together: a short post stays
+    one chunk, and a long guide comes apart at the seams its author put in.
 
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
-
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    The one guard is on length. A paragraph longer than `config.CHUNK_SIZE`
+    gets windowed the old way, so a wall-of-text document can't produce a
+    single chunk too big to be a useful retrieval hit.
     """
-    return fallback_split(documents)
+    max_chars = config.CHUNK_SIZE
+    overlap = config.CHUNK_OVERLAP
+
+    chunks: list[Chunk] = []
+    for doc in documents:
+        index = 0
+        for paragraph in re.split(r"\n\s*\n", doc.text):
+            paragraph = paragraph.strip()
+            if not paragraph:
+                continue
+
+            # Short enough to stand on its own: keep it whole.
+            if len(paragraph) <= max_chars:
+                pieces = [paragraph]
+            else:
+                pieces = []
+                start = 0
+                while start < len(paragraph):
+                    window = paragraph[start : start + max_chars].strip()
+                    if window:
+                        pieces.append(window)
+                    start += max_chars - overlap
+
+            for piece in pieces:
+                chunks.append(
+                    Chunk(
+                        text=piece,
+                        source=doc.source,
+                        index=index,
+                        produced_by="chunker.py::split_documents",
+                    )
+                )
+                index += 1
+
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:
