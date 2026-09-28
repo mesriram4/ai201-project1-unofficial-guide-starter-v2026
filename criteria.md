@@ -55,29 +55,35 @@ in at least 4 of 5 tries.
 
 ---
 
-## 4. Something about your chunks
+## 4. Split chunks into an appropriate size
+
+Split by paragraphs to produce at least 4 times as many chunks as the original amount of chunks produced from summaries (88 was the starting amount). 
 
 <!-- YOU WRITE THIS ONE.
-
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
 
      Examples of the right shape — don't copy these, they should come from
      what you actually saw in Milestone 3:
        - "At least 4 of 5 sampled chunks read as a complete thought, with no
           sentence cut in half at either end."
        - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
+          in my corpus turned out to be a heading with no content under it." 
+     
+     My ideal shape: 
+          + Chunks can be of any size so long as they end with a period, ensuring that chunks are a complete idea. 
+     -->
 
 
 
 **Why this target:**
+<!-- Three times the starter amount will give me around 352 chunks, an ideal amount that will likely leave me with more information. -->
 
 
 
 ---
 
-## 5. Your choice
+## 5. Threshold limit
+
+The the distance threshold for the model's response (out of 0.6) should be below 0.45. Should pass 3 out of 5 of the questions given when running this program. 
 
 <!-- YOU WRITE THIS ONE TOO.
 
@@ -85,11 +91,14 @@ in at least 4 of 5 tries.
      speed, about refusals, about a particular kind of question your corpus
      handles badly, about source attribution being correct rather than merely
      present — anything, as long as it names a number or an observable
-     outcome. -->
+     outcome. 
+     -->
+     
 
 
 
 **Why this target:**
+Below 0.45 indicates that the model is properly retrieving chunks that are strongly related to the information needed to answer the prompt. The requirement itself also tests whether it can answer the test questions (varies by levels of specificity or vagueness towards the existing information used to create the chunks). The reason why I will allow for 3 out of 5 of the tested questions to return distances less than or equal to 0.45 is because of the acceptable possibly of an answer returning something althought it is greater than 0.45, especially if the question asked is more vague and requires reaching out to more chunks.
 
 
 
