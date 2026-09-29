@@ -70,6 +70,8 @@ Split by paragraphs to produce at least 4 times as many chunks as the original a
      
      My ideal shape: 
           + Chunks can be of any size so long as they end with a period, ensuring that chunks are a complete idea. 
+          + Average character size for chunks should be 75 characters.
+          + Avoid chunks that are less than 15 characters.
      -->
 
 

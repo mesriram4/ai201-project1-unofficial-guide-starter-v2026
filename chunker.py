@@ -83,49 +83,45 @@ def fallback_split(
 
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents on paragraph breaks instead of a character count.
+    Split documents into groups of three sentences (on periods).
 
-    A blank line is where the writer decided one thought ended and the next
-    began, so cutting there keeps whole thoughts together: a short post stays
-    one chunk, and a long guide comes apart at the seams its author put in.
+    A period is where the writer ended one thought and started the next, so
+    grouping three of them gives each chunk a little more context than a
+    single sentence alone, while still cutting on real sentence boundaries.
 
-    The one guard is on length. A paragraph longer than `config.CHUNK_SIZE`
-    gets windowed the old way, so a wall-of-text document can't produce a
-    single chunk too big to be a useful retrieval hit.
+    No length guard here on purpose: `config.CHUNK_SIZE` is tuned for a
+    single sentence, and windowing a 3-sentence group down to that size was
+    cutting chunks off mid-group instead of leaving them three sentences
+    long. A document that doesn't divide evenly by three just leaves its
+    last chunk short, rather than every chunk being at risk of truncation.
+
+    Note: this only splits on periods, not "!" or "?" — a sentence ending in
+    either of those gets folded into whatever follows it, up to the next
+    period, before the three-sentence grouping happens.
     """
-    max_chars = config.CHUNK_SIZE
-    overlap = config.CHUNK_OVERLAP
+    group_size = 3
 
     chunks: list[Chunk] = []
     for doc in documents:
         index = 0
-        for paragraph in re.split(r"\n\s*\n", doc.text):
-            paragraph = paragraph.strip()
-            if not paragraph:
+        sentences = [
+            s.strip() for s in re.split(r"(?<=\.)\s+", doc.text) if s.strip()
+        ]
+
+        for i in range(0, len(sentences), group_size):
+            piece = " ".join(sentences[i : i + group_size])
+            if not piece:
                 continue
 
-            # Short enough to stand on its own: keep it whole.
-            if len(paragraph) <= max_chars:
-                pieces = [paragraph]
-            else:
-                pieces = []
-                start = 0
-                while start < len(paragraph):
-                    window = paragraph[start : start + max_chars].strip()
-                    if window:
-                        pieces.append(window)
-                    start += max_chars - overlap
-
-            for piece in pieces:
-                chunks.append(
-                    Chunk(
-                        text=piece,
-                        source=doc.source,
-                        index=index,
-                        produced_by="chunker.py::split_documents",
-                    )
+            chunks.append(
+                Chunk(
+                    text=piece,
+                    source=doc.source,
+                    index=index,
+                    produced_by="chunker.py::split_documents",
                 )
-                index += 1
+            )
+            index += 1
 
     return chunks
 

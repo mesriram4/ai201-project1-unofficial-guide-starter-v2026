@@ -29,8 +29,8 @@
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size: 300**
+**Overlap: 30**
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -40,7 +40,9 @@
      If you changed your mind partway through, say so and say why. That's worth
      more than pretending you got it right first time.
 
-     Milestone 3. -->
+     Milestone 3. 
+     
+     ANSWER: My goal was to balance two things about chunks: 1) Chunks have to be concise, not too big or small. 2) Chunks have to provide contextual but straightforward information. I realized the best way to accomplish this goal is to make sure the the function split_documents() splits documents within city_guides into three sentences for each chunk, given the long-form, paragraphical organization of the initial documents. The max character and overlap values stemmed from experimentation. Acknowledging the variety of character lengths three sentences can generate, 300 was an ideal max that I at least wanted the average to -->
 
 ## Sample Chunks
 
@@ -51,31 +53,56 @@
      `python app.py chunks -n 5` prints all three for you. Copy them straight
      across.
 
-     Milestone 3. -->
+     Milestone 3. 
 
-**Chunk 1** — source: `` — produced by: ``
+-->
 
-```
-```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 1** — source: `guide_accessibility.md#0` — produced by: `chunker.py::split_documents`
 
 ```
+# Getting around the region with limited mobility
+
+An honest assessment rather than a promotional one. Some of these places are
+difficult and it is better to know in advance. ## Straightforward
+
+**Thornby Wells** is the easiest town in the region.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 2** — source: `guide_corry_vale.md#3 ` — produced by: `chunker.py::split_documents`
 
 ```
+## Eat and drink
+
+One pub in the largest village serves food seven days a week. A second, in the third village, opens Thursday to Sunday. There is a farm shop at the valley mouth that sells bread, cheese and little else, and it closes at 4pm.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 3** — source: `guide_givens_mill.md#0` — produced by: `chunker.py::split_documents`
 
 ```
+# Givens Mill
+
+Givens Mill is a village of 700 built around a working watermill that still grinds flour commercially. It is the sort of place people visit for an afternoon and then talk about for longer than the visit lasted. ## Getting there
+
+No station and no bus on Sundays; four buses a day from Brightwater on weekdays, taking 30 minutes.
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 4** — source: `guide_kestrelford.md#7` — produced by: `chunker.py::split_documents`
+
+``` 
+The single-track approach road is genuinely difficult in snow and the town can be cut off for a day or two most winters. ## Practical notes
+
+Cash is still useful at the market and in smaller places, though cards are
+accepted almost everywhere now. Mobile coverage is good in the centre and
+patchy on the outskirts.
+```
+
+**Chunk 5** — source: `guide_regional_transport.md#4` — produced by: `chunker.py::split_documents`
 
 ```
+The Halden Bay coast road is cut into the cliff
+and is slow rather than difficult. Parking is the constraint rather than driving. Both Halden Bay lots fill by
+10am on summer weekends.
 ```
 
 ## Sample Answer
