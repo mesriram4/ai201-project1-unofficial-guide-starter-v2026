@@ -220,15 +220,52 @@ After experimenting with chunking criteria and officially settling on chunking b
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4/5 | 4/5 | 4/5 | 4/5 |
+| 2. Every answer names a source | 5 of 5 | 4/5 | 4/5 | 4/5 | 4/5 |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5  | 5/5 | 5/5 | 5/5 |
+| 4. Split chunks into an appropriate size | 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 5. Threshold limit | 3 of 5 | 1/5 | 1/5 | 1/5 | 1/5 |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+
+
+ **1. Retrieved chunk contains the answer:**
+ "One pub in the largest village serves food seven days a week. A second, in the third village, opens Thursday to Sunday. There is a farm shop at the valley mouth that sells bread, cheese and little else, and it closes at 4pm." (Source for Question 1)
+
+**2. Every answer names a source**
+
+"### What are the opening hours of local restaurants — run 1" 
+
+- Sources retrieved: guide_brightwater.md, guide_corry_vale.md, guide_eating.md, guide_elder_ness.md, guide_givens_mill.md, guide_kestrelford.md, guide_pellew_sands.md 
+
+**3. Gate stops out-of-corpus questions**
+
+Out-of-scope questions (the gate should refuse these):
+  refused  (best distance 0.797)  What is the capital of Mongolia?
+  refused  (best distance 0.893)  How do I change the oil in a diesel engine?
+  refused  (best distance 0.975)  Who won the 1994 World Cup?
+  refused  (best distance 0.841)  What is the recommended dosage of ibuprofen for a headache?
+  refused  (best distance 0.824)  How do I write a for loop in Rust?
+  -> gate refused 5 of 5
+
+**4. Split chunks into an appropriate size**
+
+======================================================================
+Chunk 2  |  source: guide_corry_vale.md#3  |  produced by: chunker.py::split_documents
+======================================================================
+## Eat and drink
+
+One pub in the largest village serves food seven days a week. A second, in the third village, opens Thursday to Sunday. There is a farm shop at the valley mouth that sells bread, cheese and little else, and it closes at 4pm.
+
+
+**5. Threshold limit**
+
+### What are the opening hours of local restaurants — run 2
+
+- Best distance: 0.4270 (passed the gate)
+
 
 ## Verdicts
 
