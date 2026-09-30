@@ -226,6 +226,8 @@ After experimenting with chunking criteria and officially settling on chunking b
 | 4. Split chunks into an appropriate size | 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 |
 | 5. Threshold limit | 3 of 5 | 1/5 | 1/5 | 1/5 | 1/5 |
 
+(Change to criteria 5 to accomodate for threshold change from 0.6 to 0.7 --> see criteria.md)
+
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
@@ -330,13 +332,16 @@ Strategy: Still chunk by three sentences, but within sections of the document (i
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
 
-The diagnosis I've chosen for milestone 3 related to issues with retrieval. While the diagnosis I'm currently looking at is chunking-related, this process is meant to make retrieval much more efficient and organized. This change might require a lower top-k, since information retrieval is a lot more concise compared to the previous chunking strategy (chunking by three sentences regardless of topic relatability). 
+The diagnosis I've chosen for milestone 3 related to issues with retrieval. While the diagnosis I'm currently looking at is chunking-related, this process is meant to make retrieval much more efficient and organized. This change might require a higher top-k, since information retrieval is a lot more contained and will have to access other chunks compared to the previous chunking strategy (chunking by three sentences regardless of topic relatability). 
 
 The new chunking strategy I now used is the following: 
 + Chunking withing every header within a document. 
 + Within every header and every section of that header, I will still be chunking by three sentences. If for every section, I'm left with one sentence in that section, that additional sentence will be added to the previous 3-sentence chunk. 
-+ If a section is less than three sentences long, that section will be added to the chunk before (this is only done within sections and not headers. All chunks remain within their respective headers). The goa
++ If a section is less than three sentences long, that section will be added to the chunk before (this is only done within sections and not headers. All chunks remain within their respective headers). 
 + The goal of this strategy is to account for topic relatability.
+
+The new top-k value for this new strategy is: 15
++ Marginally different from 14, the change I made in milestone three (according to input from Claude). The number of chunks the model references will still be similar.
 
 ### Run Log — After
 
@@ -345,11 +350,11 @@ The new chunking strategy I now used is the following:
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 4. Split chunks into an appropriate size | 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 5. Threshold limit| 3 of 5 | 2/5 | 2/5 | 2/5 | 2/5 |
 
 **Did it help?**
 
@@ -359,6 +364,8 @@ The new chunking strategy I now used is the following:
      tell.
 
      Milestone 4. -->
+
+Not much of a difference has been made after changing the chunking strategy and the top-k from 14 to 15. Initially, I believed my responses will be more informative and consistent. While my responses are highly informative especially for questions 1 and 3, 2 and 5 are now inconsistent with the responses they are returning compared to the previous chunking strategy, where a top-k of 14 returned more relevant information consistently, and question 5 especially has answers that are slightly more lackluster compared to its responses during previous runs.
 
 ## What's Still Broken
 

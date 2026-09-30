@@ -105,6 +105,15 @@ Target:
 Below 0.45 indicates that the model is properly retrieving chunks that are strongly related to the information needed to answer the prompt. The requirement itself also tests whether it can answer the test questions (varies by levels of specificity or vagueness towards the existing information used to create the chunks). The reason why I will allow for 3 out of 5 of the tested questions to return distances less than or equal to 0.45 is because of the acceptable possibly of an answer returning something althought it is greater than 0.45, especially if the question asked is more vague and requires reaching out to more chunks.
 '''
 
+CHANGE TO CRITERIA (NEW CRITERIA): 
+
+The the distance threshold for the model's response (out of 0.7) should be below 0.55. Should pass 3 out of 5 of the questions given when running this program. 
+
+**WHY THIS NEW TARGET (UPDATED FROM PREVIOUS EXPLANATION)**
+
+Below 0.55 indicates that the model is properly retrieving chunks that are strongly related to the information needed to answer the prompt based on the new threshold. The requirement itself also tests whether it can answer the test questions (varies by levels of specificity or vagueness towards the existing information used to create the chunks). The reason why I will allow for 3 out of 5 of the tested questions to return distances less than or equal to 0.55 is because of the acceptable possibly of an answer returning something althought it is greater than 0.55, especially if the question asked is more vague and requires reaching out to more chunks. Additionally, some questions above 0.55 will still return a response referencing proper sources, but the high distance could be an indication of how vague the question itself is.
+
+
 
 
 ---
