@@ -191,6 +191,9 @@ After experimenting with chunking criteria and officially settling on chunking b
 
 '''
 
+**UNIT 2 UPDATE**
+
+Additionaly, AI was useful for helping me understand how influential configurations like top-k or threshold can be on retrieval. After conceptualizing a new chunking strategy more focused on topic-organization, I realized the number of chunks I have slightly decreased, while my character average increased. I asked claude about what would happen if I increased or decreased by top-k given this chunking strategy change. Claude was able to elaborate on the model will retrieve information based on the strategy, while offering me warnings on chunks that will be disregarded. Because of Claude, I was able to slightly improve my chunking strategy in the hopes that this new strategy can improve retrieval as well.
 
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
@@ -377,9 +380,17 @@ Not much of a difference has been made after changing the chunking strategy and 
 
      Milestone 5. -->
 
+     '''
+     Even after updating criteria 5, the program failed to have at least 3 out of 5 of its responses stay within a distance below 0.55. This could likely be because of the configurations I have set (chunking or overlap), but this failure could also likely be a result of the questions I have asked or the expectations I have set for criteria 5. Next time, I would want to re-strategize the best chunking strategy or even conceptualize better in-scope questions to test this criteria. 
+     '''
+
 ## What I'd Do Differently
 
 <!-- Knowing what you know now — which of your five criteria would you write
      differently, and why?
 
      Milestone 5. -->
+
+     '''
+     Out of all the criteria I have written so far, I'd want to change the target for criteria 4. While I was successfully able to generate over 88 chunks throughout all of my strategies, I want to change the specifications I have over character averages and max/min sizes of chunks by character. Initially, I chunked by every three sentences. Although this strategy worked, these chunks were not organized by topic and led to overlap of unrelated information between chunks. Therefore, I led with the second, more topic-oriented strategy I conceptualized during milestone 4. However, due to these changes, the character size and average have increased. Therefore, I'd want to be less specific with size to accomodate for chunking strategy changes. 
+     ''' 
