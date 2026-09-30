@@ -57,7 +57,7 @@ in at least 4 of 5 tries.
 
 ## 4. Split chunks into an appropriate size
 
-Split by paragraphs to produce at least 4 times as many chunks as the original amount of chunks produced from summaries (88 was the starting amount). 
+Split by every three sentences to produce more than 88 chunks that are concise and informative without leaving out relevant information or contain incoherent sentences unrelated to the main point of that chunk. 
 
 <!-- YOU WRITE THIS ONE.
 
@@ -67,17 +67,19 @@ Split by paragraphs to produce at least 4 times as many chunks as the original a
           sentence cut in half at either end."
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." 
-     
-     My ideal shape: 
-          + Chunks can be of any size so long as they end with a period, ensuring that chunks are a complete idea. 
-          + Average character size for chunks should be 75 characters.
-          + Avoid chunks that are less than 15 characters.
      -->
 
-
+'''
+My ideal shape: 
+     + Chunks can be of any size so long as they include three sentences. 
+     + Average character size for chunks should be around 250 characters.
+     + Avoid chunks that are less than 90 characters.
+'''
 
 **Why this target:**
-<!-- Three times the starter amount will give me around 352 chunks, an ideal amount that will likely leave me with more information. -->
+'''
+Every three sentences on average will include full sentences or elaborations on a single topic. When running the program, there are a total of 110 chunks. While not dramatically more than the initial amount of chunks, these chunks are still capable of being properly referenced when testing questions. 
+'''
 
 
 
@@ -100,7 +102,9 @@ The the distance threshold for the model's response (out of 0.6) should be below
 
 
 **Why this target:**
+'''
 Below 0.45 indicates that the model is properly retrieving chunks that are strongly related to the information needed to answer the prompt. The requirement itself also tests whether it can answer the test questions (varies by levels of specificity or vagueness towards the existing information used to create the chunks). The reason why I will allow for 3 out of 5 of the tested questions to return distances less than or equal to 0.45 is because of the acceptable possibly of an answer returning something althought it is greater than 0.45, especially if the question asked is more vague and requires reaching out to more chunks.
+'''
 
 
 

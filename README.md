@@ -27,6 +27,13 @@
 
      Milestone 5. -->
 
+'''
+ANSWER: 
+
+The goal of this "Unofficial Guide" is to use available documents or snippets of information collected on a topic and return answers based on the questions you ask about said topic. For example, the corpus I've chosen to to build my system around is based on the files of 'city_guide'. Basically, the program reorganizes documents under the city_guide folder into chunks. Based on these chunks, the program is capable of answering questions related to information about the city, such as transporation, open business hours, urban planning, housing, etc. However, the bandwidth of information the program can rely on is only so much: if you attempt to input a question completely unrelated to the contents of 'city_guide', the program will warn you about its inability to respond to an out of scope question, avoiding hallucinating an answer instead.
+
+'''
+
 ## Chunking Strategy
 
 **Chunk size: 300**
@@ -40,9 +47,16 @@
      If you changed your mind partway through, say so and say why. That's worth
      more than pretending you got it right first time.
 
-     Milestone 3. 
-     
-     ANSWER: My goal was to balance two things about chunks: 1) Chunks have to be concise, not too big or small. 2) Chunks have to provide contextual but straightforward information. I realized the best way to accomplish this goal is to make sure the the function split_documents() splits documents within city_guides into three sentences for each chunk, given the long-form, paragraphical organization of the initial documents. The max character and overlap values stemmed from experimentation. Acknowledging the variety of character lengths three sentences can generate, 300 was an ideal max that I at least wanted the average to -->
+     Milestone 3.
+
+-->
+'''   
+ANSWER: My goal was to balance two things about chunks: 1) Chunks have to be concise, not too big or small. 2) Chunks have to provide contextual but straightforward information. 
+
+I realized the best way to accomplish this goal is to make sure the the function split_documents() splits information within city_guides into three sentences for each chunk, given the long-form, paragraphical organization of the initial documents. The max character and overlap values stemmed from experimentation. 
+
+Acknowledging the variety of character lengths three sentences can generate, 300 was an ideal max that I at least wanted the average to stay within. Keeping the overlap at 30 allows two neighboring chunks to share related information (preventing cut-offs while also keeping a chunk that expands upon information of a previous chunk connected to that chunk). These values allow for the model to return more informative and well-developed answers without hallucinating its own answers or admitting to not having enough info.
+'''
 
 ## Sample Chunks
 
@@ -111,13 +125,22 @@ and is slow rather than difficult. Parking is the constraint rather than driving
      visible. Milestone 4. -->
 
 **Question:**
+'''
+"What time of year is best for affordable housing"
+'''
 
 **Answer:**
 
 ```
+According to *guide_marchwood.md*, accommodation is plentiful and cheap outside of conference weeks. *guide_brightwater.md* states that outside of graduation week and early September, there is more supply than demand for accommodation. Additionally, *guide_halden_bay.md* notes that prices roughly halve outside of July and August.
+
+Sources retrieved: guide_brightwater.md, guide_elder_ness.md, guide_givens_mill.md, guide_halden_bay.md, guide_kestrelford.md, guide_marchwood.md, guide_thornby_wells.md
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff**
+'''
+0.7
+'''
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -126,11 +149,15 @@ and is slow rather than difficult. Parking is the constraint rather than driving
      did those two groups look like? Where was the gap? Put the actual numbers
      here — the table below wants all ten rows.
 
-     Milestone 4. -->
+     Milestone 4. 
+     -->
+'''
+ANSWER: The threshold I reconfigured to is 0.7. By configuring the threshold higher than the initially established, the model is able to answer more questions without outputting an error message.  
+'''
+
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|"What time of year is best for affordable housing"|Yes|0.610 (threshold: 0.7)|
 
 ## How I Used AI
 
@@ -144,8 +171,27 @@ and is slow rather than difficult. Parking is the constraint rather than driving
      Milestone 5. -->
 
 **1.**
+'''
+Claude During Milestone 2: 
+
+This is my first time writing acceptance criteria for a project. After reading through CodePath's instructions, I wrote my criteria and ran a prompt asking Claude to evaluate how it would test those questions given the criteria I've established. Claude was able to give me insightful notes on how to tailor my questions. For example, one criteria I initially wanted to establish was creating 4x as many chunks as initially established (88). I asked Claude how it would test it and how well it can understand said criteria. Claude was able to give me some meaningful feedback on what to change due to vagueness or similarities to previous criteria. 
+
+Claude initially recommended I split by paragraph when creating my chunks. However, I disagreed with the chatbot and instead opted to split chunks by sentence. This method proved to have been inefficient, so I came up with the idea to split chunks by three sentences again and had Claude run the criteria again. It approved of the changes and confirmed that this criteria is good to go. 
+
+Additionally, Claude was able to assist with modifying the code to best reflect the chunking strategy I wanted for the program.
+'''
+
 
 **2.**
+
+'''
+Claude during Milestone 3:
+
+After experimenting with chunking criteria and officially settling on chunking by three sentences, I was able to ask Claude to evaluate 5 of the chunks and determine if they are comprehensible. Additionally, I asked Claude what kind of questions these chunks would likely be able to answer based on each chunk. Overall, Claude contributed to the trial and error process of figuring out what chunking strategy can lead to the best results.
+
+'''
+
+
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
