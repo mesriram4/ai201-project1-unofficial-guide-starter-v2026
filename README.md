@@ -280,7 +280,7 @@ One pub in the largest village serves food seven days a week. A second, in the t
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 | Retrieved chunk contains the answer | MET | Meant to pass 4 out of 5 questions for all runs. Passed 4 out 5 as expected. This criteria was measured by the degree of relevance the source has to a prompt and its connection to neighboring chunks or similar documents related to the prompt.|
+| 1 | Retrieved chunk contains the answer | MET | Meant to pass 4 out of 5 questions for all runs. Passed 4 out 5 as expected. This criteria was measured by the degree of relevance the source has to a prompt. Best evidence provided was one of the chunks used to answer question 1 (opening hours for local restaurants). That chunk is one of many chunks used for this question that contains a direct answer to the test question.|
 | 2 | Every answer names a source | MET | While the goal was 5/5, the 4/5 came from the model not having enough info to answer one of the questions, meaning a source will be provided if the model has enough info to answer a question (will still list sources it checked when formulating an answer). Overall, even for in-corpus questions that the model could not answer, the model will state that it has searched through available sources and let the user know that it cannot identify sources to answer all questions, demonstrated commitment to always using sources for outputs.|
 | 3 | Gate stops out-of-corpus questions | MET | Model refuses to answer out-of-corpus questions 100% of the time. Similar to the results of criteria 2. |
 | 4 | Split chunks into an appropriate size | MET | Initially 4/5, but all chunks were split into three sentences each as desired.  |
@@ -305,6 +305,17 @@ One pub in the largest village serves food seven days a week. A second, in the t
      low, and which one you'd tighten and to what.
 
      Milestone 3. -->
+
+Questions 2 and 5 are the most interesting most due to variability in answers depending on runs. For context, questions 2 and 5 have a greater best distance compared to other in-scope questions (both above 0.6), so while the model is able to return responses every run, there are times where the program will return more information or even withold additional information during runs. I believe this is a problem with retrieval especially for questions with greater distances.
+
+To solve this retrieval issue and make sure the program is consistently returning relevant information without oversharing or witholding information, I changed the top-k value from 10 to 14, allowing for the program to consistently return more relevant information. For example, Question 2 initially returned information on a town that is the most transporation-friendly, but the program also returned information on a town with the best train network. Sometimes, the program will bring up the train network , other times, it won't. When increasing the top-k from 10 to 14, I initially expected the program to consistently bring up the network, however, after re-running it a few times, the train network was left out more often, but in return, the program emphasized the efficiency of transporation in the first time much more than it did when top-k = 10. Therefore, I finalized 14 as my top-k, understanding that the program was able to expand more on a relevant topic than bring up something slightly less relevant to the prompt. 
+
+Additionally, I tested the new top-k on Question 5, which was able to consistently return more information on affordable housing than when top-k = 10. I also tested the rest of the questions, and the responses were much more informative and polished when top-k = 14. However, when testing the 4th question regarding local events for students, the program still claimed it did not have enough information on the topic, possibly confirming the 4th question might possibly be out of scope.
+
+Summary of diagnosis and fix: 
+- Diagnosis: Inconsistent retrieval for questions with higher distances (Questions 2 and 5)
+- Fix: Increasing top-k to allow for more consistently informative answers during runs.
+
 
 ## The Improvement
 
