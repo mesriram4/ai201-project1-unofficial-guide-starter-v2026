@@ -321,10 +321,22 @@ Summary of diagnosis and fix:
 
 **What I changed:**
 
+Previous, I changed top-k during the Diagnoses question in the hopes of improving answer consistency. This time, I want to change the chunking strategy to organize ideas much more efficiently. 
+
+Strategy: Still chunk by three sentences, but within sections of the document (indicated by titles). Instead, the program first identifies sections within the document, then attempts to chunk by three sentences within a paragraph. If the program encounters the paragraph ending before three sentences, then the program will just return the remaining number of sentences so long as it stops at the paragraph break. The same rule applies to if a program encounters a new title within the document. 
+
 **Why I picked it:**
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
+
+The diagnosis I've chosen for milestone 3 related to issues with retrieval. While the diagnosis I'm currently looking at is chunking-related, this process is meant to make retrieval much more efficient and organized. This change might require a lower top-k, since information retrieval is a lot more concise compared to the previous chunking strategy (chunking by three sentences regardless of topic relatability). 
+
+The new chunking strategy I now used is the following: 
++ Chunking withing every header within a document. 
++ Within every header and every section of that header, I will still be chunking by three sentences. If for every section, I'm left with one sentence in that section, that additional sentence will be added to the previous 3-sentence chunk. 
++ If a section is less than three sentences long, that section will be added to the chunk before (this is only done within sections and not headers. All chunks remain within their respective headers). The goa
++ The goal of this strategy is to account for topic relatability.
 
 ### Run Log — After
 
