@@ -280,11 +280,11 @@ One pub in the largest village serves food seven days a week. A second, in the t
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunk contains the answer | MET | Meant to pass 4 out of 5 questions for all runs. Passed 4 out 5 as expected. This criteria was measured by the degree of relevance the source has to a prompt and its connection to neighboring chunks or similar documents related to the prompt.|
+| 2 | Every answer names a source | MET | While the goal was 5/5, the 4/5 came from the model not having enough info to answer one of the questions, meaning a source will be provided if the model has enough info to answer a question (will still list sources it checked when formulating an answer). Overall, even for in-corpus questions that the model could not answer, the model will state that it has searched through available sources and let the user know that it cannot identify sources to answer all questions, demonstrated commitment to always using sources for outputs.|
+| 3 | Gate stops out-of-corpus questions | MET | Model refuses to answer out-of-corpus questions 100% of the time. Similar to the results of criteria 2. |
+| 4 | Split chunks into an appropriate size | MET | Initially 4/5, but all chunks were split into three sentences each as desired.  |
+| 5 | Threshold limit | MISSED | Set an expectation for best distance staying below 0.45, but since I set the threshold to 0.7, most questions had a best distance between 0.5 to 0.6. |
 
 ## Diagnoses
 

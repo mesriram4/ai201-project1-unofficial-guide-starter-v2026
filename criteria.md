@@ -19,12 +19,10 @@ pipeline earns credit; *"80% seemed reasonable"* does not.
 
 ## 1. Retrieved chunks contain the answer
 
-For at least 4 of my 5 test questions, the retrieved chunks include one that
-contains the answer.
+For at least 4 of my 5 test questions, the retrieved chunks include one that contains the answer.
 
 **Why this target:**
-<!-- e.g. "One of my questions is about a topic only two documents mention, so
-     I expect that one to be hard." -->
+<!-- A great way to indicate how well the model searches through information and calculate distance (showcases relevancy of chunks to prompts). A measure of how far a model would go to search for information so long as it corresponds exactly to or is relevant enough to the prompt. -->
 
 ---
 
@@ -33,16 +31,14 @@ contains the answer.
 Every answer the system produces names at least one source document.
 
 **Why this target:**
-<!-- Why all five and not four? What about your setup makes that achievable —
-     or what would have to go wrong for it not to be? -->
+<!-- MY ANSWER: The objective of this system is to test and prevent hallucinations, even out of scope questions or in-scope questions with lack of info need to references sources to prove the system looked through sources to find the best answer -->
 
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
 
 When I ask a question my documents clearly don't cover, the relevance gate
-stops it and the system returns "I don't have enough information about that" —
-in at least 4 of 5 tries.
+stops it and the system returns "I don't have enough information about that" — in at least 4 of 5 tries.
 
 <!-- The five questions are the ones in `OUT_OF_SCOPE` at the bottom of
      `questions.py`, and `run_eval.py` puts them through the gate and writes
@@ -50,8 +46,7 @@ in at least 4 of 5 tries.
      just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
 
 **Why this target:**
-<!-- What did your distances look like when you set the cutoff in Milestone 4?
-     Was there a clean gap, or did the two groups overlap? -->
+<!-- There should be a clean cut gap, where there is little to virtually no overlap in best distances between in-scope and out-of-scope questions. -->
 
 ---
 
