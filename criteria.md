@@ -70,7 +70,7 @@ Split by every three sentences to produce more than 88 chunks that are concise a
      -->
 
 '''
-My ideal shape: 
+Target: 
      + Chunks can be of any size so long as they include three sentences. 
      + Average character size for chunks should be around 250 characters.
      + Avoid chunks that are less than 90 characters.
@@ -98,7 +98,11 @@ The the distance threshold for the model's response (out of 0.6) should be below
      outcome. 
      -->
      
-
+'''
+Target: 
+     + 3 out of 5 of the sample questions should be within the starting threshold (0.6), ideally below 0.45. 
+     + 4 out of 5 of the sample questions absolutely have to be within 0.6 even if one of them is above 0.45
+'''
 
 
 **Why this target:**
